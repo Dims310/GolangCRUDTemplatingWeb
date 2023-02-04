@@ -1,0 +1,123 @@
+<html>
+    <style>
+        body{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 20px 20px 0px 20px;
+        }
+        th {
+            text-align: left;
+        }
+        table{
+            margin-bottom: 20px;
+        }
+        #get{
+            font-weight:bold;
+            color:olivedrab;
+        }
+        #post{
+            font-weight: bold;
+            color: goldenrod;
+        }
+        h3{
+            font-weight: 300;
+        }
+        .content{
+            border-bottom: 2px solid #bbb;
+        }
+        label{
+            margin-right: 15px;
+        }
+        #btn-pres{
+            margin-left: 5px;
+        }
+        header{
+            font-size: 10px;
+        }
+        form {
+            display: inline;
+        }
+    </style>
+    <head>
+        <title>
+            CRUD Simulation
+        </title>
+    </head>
+    <body>
+        <header>
+            {{if .Status}}
+                <p>Database status: <span style="color: green; font-weight: bold;">OK</span></p>
+            {{else}}
+                <p>Database status: <span style="color: red; font-weight: bold;">No Connection</span></p>
+                <p>Try connect and refresh this page.</p>
+            {{end}}
+        </header>
+        <section>
+            <h3> <span id="get">GET</span> Method: <span id="get">Query</span> All Records.</h3>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th style="width: 20%;">Name</th>
+                        <th style="width: 30%;">Presence time</th>
+                        <th style="width: 20%;">Absence time</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{range .Name}}
+                                <p>{{.}}</p>
+                            {{else}}
+                                <p>No record.</p>
+                            {{end}}
+                        </td>
+                        <td>
+                            {{range .Presence}}
+                                <p>{{.}}</p>
+                            {{else}}
+                                <p>No record.</p>
+                            {{end}}
+                        </td>
+                        <td>
+                            {{range .Absence}}
+                                <p>{{.}}</p>
+                            {{else}}
+                                <p>No record.</p>
+                            {{end}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        
+        <footer>
+            <h3><span id="post">POST</span> Method: To <span id="post">create</span> new, <span id="post">update</span>, and <span id="post">delete</span> records.</h3>
+            {{if .Status}}
+            <form action="/" method="post">
+                <label>Name</label>
+                <input type="text" name="form-name" enctype="multipart/form-data">
+                <button type="submit" id="btn-pres" value="pres" name="submit">Presence/Absence</button>
+                <button type="submit" id="btn-del" value="del" name="submit">Delete</button>
+            </form>          
+            {{else}}
+            <form>
+                <label>Name</label>
+                <input disabled type="text">
+                <button disabled type="submit">Presence/Absence</button>
+                <button disabled type="submit">Delete</button>
+            </form>
+            {{end}}
+            {{if .Status}}
+            <h5 id="info-post">{{.Info}}</h5>
+            {{else}}
+            <h5 id="info-post" style="color: red; font-weight: bold;">No Connection</h5>
+            {{end}}
+            <br>
+            <br>
+            <a href="information.html" style="font-weight: 100; font-size: 10px;">More Information.</a>
+        </footer>
+    </body>
+    <script>
+        setTimeout(function() {
+            var msg = document.getElementById("info-post")
+            msg.parentNode.removeChild(msg);
+        }, 2500);
+    </script>
+</html>
